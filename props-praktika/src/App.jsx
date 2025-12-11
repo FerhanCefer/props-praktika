@@ -1,30 +1,74 @@
-import React from 'react';
-import UserCard from './components/UserCard'; 
+import React, { useState, memo } from 'react';
 
-function App() {
-  const isciler = [
-    { id: 1, ad: "Fərhan", pese: "Front-End Developer", yas: 22, maas: 1500 },
-    { id: 2, ad: "Əli", pese: "Dizayner", yas: 25, maas: 1200 },
-    { id: 3, ad: "Aysel", pese: "Layihə Meneceri", yas: 28, maas: 1800 }
-  ];
+const Basliq = memo(({ title }) => {
+  console.log("Başlıq render oldu!"); 
+  return <h1>{title}</h1>;
+});
+const App = () => {
+
+  const [count, setCount] = useState(0)
+
+  const Min_Limit = -10;
+  const Max_Limit = 10;
+
+  let textColor = "black";
+
+  if (count > 0) {
+    textColor = "green";
+  } else if (count < 0) {
+    textColor = "red";
+  }
+
+  const artır = () => {
+    setCount(count + 1);
+  };
+
+  const azalt = () => {
+    setCount(count - 1);
+  };
+
+  const sifirla = () => {
+    setCount(0);
+  };
+
+  const reqemeBas = () => {
+    console.log("Nagarmaq fikrin var");
+  }
+
+  console.log ("App render oldu");
+
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-      
-      {isciler.map((isci) => (
-        
-        <UserCard 
-          key={isci.id}       
-          ad={isci.ad}        
-          pese={isci.pese}    
-          yas={isci.yas}
-          maas={isci.maas}      
-        />
+    <div style={{ padding: '20px', fontFamily: 'Arial', textAlign: 'center' }}>
+      <Basliq title="Counter Tətbiqi" />
 
-      ))}
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+        <button onClick={azalt} style={{ padding: '5px 15px' }} disabled={count === Min_Limit}>Azalt (-)</button>
+
+        <span
+          onClick={reqemeBas}
+          style={{
+            color: textColor,
+            fontSize: '30px',
+            fontWeight: 'bold',
+            width: '50px',
+            display: 'inline-block',
+            cursor: 'pointer'
+          }}>
+          {count}
+        </span>
+
+        <button onClick={artır} style={{ padding: '5px 15px' }} disabled={count === Max_Limit}>Artır (+)</button>
+      </div>
+
+      <div style={{ marginTop: '20px' }}>
+        <button onClick={sifirla} style={{ backgroundColor: '#f0ad4e', border: 'none', padding: '10px 20px', cursor: 'pointer', borderRadius: '5px' }}>
+          Sıfırla (Reset)
+        </button>
+      </div>
 
     </div>
   );
 }
 
-export default App;
+export default App
